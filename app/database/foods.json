@@ -1,0 +1,55 @@
+{
+	"Apple": {
+	
+		"id" : 0,
+		"type" : "Fruit",
+		"protein" : 0.3,
+		"calcium" : 6.1,
+		"potassium" : 109.1,
+		"calories" : 53
+	},
+	"Orange": {
+	
+		"id" : 1,
+		"type" : "Fruit",
+		"protein" : 1.3,
+		"calcium" : 48.4,
+		"potassium" : 216.6,
+		"calories" : 59
+	
+	},
+	"Carrot": {
+	
+		"id" : 2,
+		"type" : "Vegetable",
+		"protein" : 0.1,
+		"calcium" : 3.2,
+		"potassium" : 23.7,
+		"calories" : 4
+	},
+	"Potato":{
+	
+		"id" : 3,
+		"type" : "Vegetable",
+		"protein" : 2.8,
+		"calcium" : 15,
+		"potassium" : 682.5,
+		"calories" : 108
+	},
+	"Pasta": {
+		"id" : 4,
+		"type" :"Salad",
+		"protein" : 6,
+		"calcium" : 0,
+		"potassium" : 0,
+		"calories" : 197
+	},
+	"Macaroni": {
+		"id" : 5,
+		"type" : "Salad",
+		"protein" : 4,
+		"calcium" : 0,
+		"potassium" : 0,
+		"calories" : 136
+	}
+}

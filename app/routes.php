@@ -1,17 +1,47 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the Closure to execute when that URI is requested.
-|
-*/
 
-Route::get('/', function()
-{
-	return View::make('hello');
+# Homepage
+Route::get('/', function() {
+
+    return View::make('welcom');
+});
+
+
+// List all foods / search
+Route::get('/list/{query?}', function($query) {
+    return View::make('list');
+});
+
+
+// Display the form for a new foods
+Route::get('/add', function() {
+});
+
+
+// Process form for a new foods
+Route::post('/add', function() {
+});
+
+
+// Display the form to edit a foods
+Route::get('/edit/{title}', function() {
+});
+
+
+// Process form for a edit foods
+Route::post('/edit/', function() {
+});
+
+
+Route::get('/data', function() {
+
+    // Get the file
+    $foods = File::get(app_path().'/database/foods.json');
+
+    // Convert to an array
+    $foods = json_decode($foods,true);
+
+    // Return the file
+    echo Pre::render($foods);
 });

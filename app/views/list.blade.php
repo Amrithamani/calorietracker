@@ -17,9 +17,9 @@
 	
 	<h2>You searched for {{{ $query }}}</h2>
 	
-	@foreach($foods as $type => $food)
+	@foreach($foods as $title => $food)
 		<section class='food'>
-			<h2>{{ $type }}</h2>
+			<h2>{{ $title }}</h2>
 			{{ $food['calories'] }} ({{$food['protein']}})
 			
 			{{ $food['potassium'] }} ({{$food['calcium']}})

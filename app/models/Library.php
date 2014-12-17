@@ -31,20 +31,20 @@ class Library {
 		$results = Array();
 		
 		# Loop through the foods looking for matches
-		foreach($this->foods as $type => $food) {
+		foreach($this->foods as $title => $food) {
 					
 			# First compare the query against the type
-			if(stristr($type,$query)) {
+			if(stristr($title,$query)) {
 			
 				# There's a match - add this food the the $results array
-				$results[$type] = $food;
+				$results[$title] = $food;
 			}
 			# Then compare the query against all the attributes of the food
 			else {
 						
 				if(self::search_food_attributes($food,$query)) {
 					# There's a match - add this food the the $results array
-					$results[$type] = $food;
+					$results[$title] = $food;
 				}
 			}
 		}

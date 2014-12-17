@@ -71,6 +71,86 @@ Route::get('/data', function() {
     echo Pre::render($foods);
 });
 
+Route::get('/practice-creating', function() {
+
+    # Instantiate a new Food model class
+    $food = new Food();
+
+    # Set
+
+    $food->type = 'Fruit';
+    $food->protein = 0.3;
+    $food->calcium = 6.1;
+    $food->potassium = 109.1;
+    $food->calories = 53;
+
+    # This is where the Eloquent ORM magic happens
+    $food->save();
+
+    return 'A new food has been added! Check your database to see...';
+
+});
+
+Route::get('/practice-reading', function() {
+
+    # The all() method will fetch all the rows from a Model/table
+    $foods = Food::all();
+
+    # Make sure we have results before trying to print them...
+    if($foods->isEmpty() != TRUE) {
+
+        # Typically we'd pass $foods to a View, but for quick and dirty demonstration, let's just output here...
+        foreach($foods as $food) {
+            echo $food->type.'<br>';
+        }
+    }
+    else {
+        return 'No foods found';
+    }
+
+});
+
+Route::get('/practice-updating', function() {
+
+    # First get a food to update
+    $food = Food::where('type', 'LIKE', '%Fruit%')->first();
+
+    # If we found the food, update it
+    if($food) {
+
+        # Give it a different title
+        $food->type = 'Apple';
+
+        # Save the changes
+        $food->save();
+
+        return "Update complete; check the database to see if your update worked...";
+    }
+    else {
+        return "Food not found, can't update.";
+    }
+
+});
+
+Route::get('/practice-deleting', function() {
+
+    # First get a food to delete
+    $food = Food::where('type', 'LIKE', '%Fruit%');
+
+    # If we found the food, delete it
+    if($food) {
+
+        # Goodbye!
+        $food->delete();
+
+        return "Deletion complete; check the database to see if it worked...";
+
+    }
+    else {
+        return "Can't delete - Food not found.";
+    }
+
+});
 
 Route::get('/get-environment',function() {
 
@@ -97,6 +177,25 @@ Route::get('mysql-test', function() {
     echo Pre::render($results);
 
 });
+
+Route::get('/test', function() {
+
+	$type = Input::get('type');
+
+	    # Write your own SQL select statement
+	    $sql = 'SELECT * FROM foods WHERE type LIKE "%$type%"';
+
+	    # Escape your statement if you have any input coming from users to avoid SQL injection attacks
+	    # In this example we don't, but it doesn't hurt to do it anyway
+	    $sql = DB::raw($sql);
+
+	    # Run your SQL query
+	    $foods = DB::select($sql);
+
+	    # Output the results
+	    echo Paste\Pre::render($foods,'');
+	});
+
 
 # /app/routes.php
 Route::get('/debug', function() {
@@ -143,3 +242,15 @@ Route::get('/debug', function() {
     echo '</pre>';
 
 });
+
+/*
+Print all available routes
+*/
+Route::get('/routes', function() {
+
+    $routeCollection = Route::getRoutes();
+    foreach($routeCollection as $value) {
+        echo "<a href='/".$value->getPath()."' target='_blank'>".$value->getPath()."</a><br>";
+    }
+});
+

@@ -9,7 +9,15 @@
 @stop
 
 @section('content')
-	<h1>Welcome to Calorietracker</h1>
+	
+	{{ Form::open(array('url' => '/list', 'method' => 'GET')) }}
 
-	Search: <input type='text'>
+		{{ Form::label('query','Search') }}
+	
+		{{ Form::text('query'); }}
+
+		{{ Form::submit('Search'); }}
+
+	{{ Form::close() }}
+	
 @stop

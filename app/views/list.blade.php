@@ -7,9 +7,15 @@
 @section('content')
 	<h1>List all foods</h1>
 	
+	<div>
+	
 	View as:
 	<a href='/list/json' target='_blank'>JSON</a> 
 	<a href='/list/pdf' target='_blank'>PDF</a><br>
+	
+	</div>
+	
+	<h2>You searched for {{{ $query }}}</h2>
 	
 	@foreach($foods as $type => $food)
 		<section class='food'>

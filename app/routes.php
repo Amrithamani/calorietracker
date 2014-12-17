@@ -11,24 +11,29 @@ Route::get('/', function() {
 // List all foods / search
 Route::get('/list/{format?}', function($format = 'html') {
 
-     $library = new Library();
+     $query = Input::get('query');
 
-	    $library->setPath(app_path().'/database/foods.json');
+	     $library = new Library();
+	     $library->setPath(app_path().'/database/foods.json');
 
-	    $foods = $library->getFoods();
+	     $foods = $library->getFoods();
 
-	    if($format == 'json') {
-	        return 'JSON Version';
-	    }
-	    elseif($format == 'pdf') {
-	        return 'PDF Version;';
-	    }
-	    else {
-	        return View::make('list')
-	            ->with('name','Amritha')
-	            ->with('foods', $foods);
-	    }
+	     if($query) {
+	         $foods = $library->search($query);
+	     }
 
+	     if($format == 'json') {
+	         return 'JSON Version';
+	     }
+	     elseif($format == 'pdf') {
+	         return 'PDF Version;';
+	     }
+	     else {
+	         return View::make('list')
+	             ->with('name','Amritha')
+	             ->with('foods', $foods)
+	             ->with('query', $query);
+    }
 
 });
 

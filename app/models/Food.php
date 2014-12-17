@@ -2,13 +2,10 @@
 
 class Food extends Eloquent {
 
-	public function __construct() {
-		
-	}
-	
-	public function get_most_popular() {
-	
-	
-	}
+	public function recipe() {
+        
+        # Define a one-to-many relationship.
+        return $this->hasMany('Recipe');
+    }
 
 }

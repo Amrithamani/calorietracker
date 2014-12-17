@@ -196,7 +196,131 @@ Route::get('/test', function() {
 	    echo Paste\Pre::render($foods,'');
 	});
 
+	
+	
+/*-------------------------------------------------------------------------------------------------
+4. Helpers
+-------------------------------------------------------------------------------------------------*/
+/* 
+The best way to fill your tables with sample/test data is using Laravel's Seeding feature.
+Before we get to that, though, here's a quick-and-dirty practice route that will
+throw three recipes into the `recipes` table.
+*/
+Route::get('/seed-recipes', function() {
+    return 'This seed will no longer work because the recipes table is no longer embedded with the food.';
+    
+	# Build the raw SQL query
+    $sql = "INSERT INTO recipes (title,image,site_link) VALUES 
+            ('Apple popcorn ball','images/applepopcornball.jpeg','http://www.foodnetwork.com/recipes/articles/50-things-to-make-with-apples/things-to-make-with-apples.html'),
+            ('Carrot muffins','images/carrotmuffins.jpg','http://allrecipes.com/Recipe/Carrot-Muffins/Detail.aspx?prop24=hn_slide1_Carrot-Muffins&evt19=1'),
+            ('Plain pasta','images/plain pasta.jpg','http://allrecipes.com/Recipes/Pasta-and-Noodles/Homemade-Pasta/Main.aspx?evt19=1&src=hr_browsedeeper&soid=hr_coll_3')
+			";
+            
+    # Run the SQL query
+    echo DB::statement($sql);
+    # Get all the recipes just to test it worked
+    $recipes = DB::table('recipes')->get();
+    # Print all the recipes
+    echo Paste\Pre::render($recipes,'');
+});
+Route::get('/seed-recipes-and-foods', function() {
+    
+	$clean = new Clean();
+    
+	# Foods
+    $apple = new Food;
+    $apple->name = 'Apple';
+    $apple->type = 'Fruit';
+    $apple->calories = 53;
+    $apple->save();
 
+    $carrot = new Food;
+    $carrot->name = 'Carrot';
+    $carrot->type = 'Vegetable';
+    $carrot->calories = 4;
+    $carrot->save();
+
+    $pasta = new Food;
+    $pasta->name = 'Pasta';
+    $pasta->type = 'Salad';
+    $pasta->calories = 197;
+    $pasta->save();
+
+    # Recipes
+    $popcorn = new Recipe;
+    $popcorn->title = 'Apple popcorn ball';
+    $popcorn->image = 'images/applepopcornball.jpeg';
+    $popcorn->site_link = 'http://www.foodnetwork.com/recipes/articles/50-things-to-make-with-apples/things-to-make-with-apples.html';
+
+    # Associate has to be called *before* the food is created (save())
+    $popcorn->food()->associate($apple); # Equivalent of $gatsby->author_id = $fitzgerald->id
+    $popcorn->save();
+
+    $muffin = new Recipe;
+    $muffin->title = 'Carrot muffins';
+    $muffin->image = 'images/carrotmuffins.jpg';
+    $muffin->site_link = 'http://allrecipes.com/Recipe/Carrot-Muffins/Detail.aspx?prop24=hn_slide1_Carrot-Muffins&evt19=1';
+    $muffin->food()->associate($carrot);
+    $muffin->save();
+
+    $plain = new Recipe;
+    $plain->title = 'Plain pasta';
+    $plain->image = 'images/plain pasta.jpg';
+    $plain->site_link = 'http://allrecipes.com/Recipes/Pasta-and-Noodles/Homemade-Pasta/Main.aspx?evt19=1&src=hr_browsedeeper&soid=hr_coll_3';
+    $plain->food()->associate($pasta);
+    $plain->save();
+    return 'Done';
+	
+  
+});
+
+Route::get('/seed-a', function() {
+
+
+    # Foods
+    $apple = new Food;
+    $apple->name = 'Apple';
+    $apple->type = 'Fruit';
+    $apple->calories = 53;
+    $apple->save();
+
+    $carrot = new Food;
+    $carrot->name = 'Carrot';
+    $carrot->type = 'Vegetable';
+    $carrot->calories = 4;
+    $carrot->save();
+
+    $pasta = new Food;
+    $pasta->name = 'Pasta';
+    $pasta->type = 'Salad';
+    $pasta->calories = 197;
+    $pasta->save();
+
+    # Recipes
+    $popcorn = new Recipe;
+    $popcorn->title = 'Apple popcorn ball';
+    $popcorn->image = 'images/applepopcornball.jpeg';
+    $popcorn->site_link = 'http://www.foodnetwork.com/recipes/articles/50-things-to-make-with-apples/things-to-make-with-apples.html';
+
+    # Associate has to be called *before* the food is created (save())
+    $popcorn->food()->associate($apple); # Equivalent of $gatsby->author_id = $fitzgerald->id
+    $popcorn->save();
+
+    $muffin = new Recipe;
+    $muffin->title = 'Carrot muffins';
+    $muffin->image = 'images/carrotmuffins.jpg';
+    $muffin->site_link = 'http://allrecipes.com/Recipe/Carrot-Muffins/Detail.aspx?prop24=hn_slide1_Carrot-Muffins&evt19=1';
+    $muffin->food()->associate($carrot);
+    $muffin->save();
+
+    $plain = new Recipe;
+    $plain->title = 'Plain pasta';
+    $plain->image = 'images/plain pasta.jpg';
+    $plain->site_link = 'http://allrecipes.com/Recipes/Pasta-and-Noodles/Homemade-Pasta/Main.aspx?evt19=1&src=hr_browsedeeper&soid=hr_coll_3';
+    $plain->food()->associate($pasta);
+    $plain->save();
+    return 'Done';
+});	
 
 /*
 Print all available routes

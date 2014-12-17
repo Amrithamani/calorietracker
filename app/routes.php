@@ -10,7 +10,26 @@ Route::get('/', function() {
 
 // List all foods / search
 Route::get('/list/{format?}', function($format = 'html') {
-    return View::make('list');
+
+     $library = new Library();
+
+	    $library->setPath(app_path().'/database/foods.json');
+
+	    $foods = $library->getFoods();
+
+	    if($format == 'json') {
+	        return 'JSON Version';
+	    }
+	    elseif($format == 'pdf') {
+	        return 'PDF Version;';
+	    }
+	    else {
+	        return View::make('list')
+	            ->with('name','Amritha')
+	            ->with('foods', $foods);
+	    }
+
+
 });
 
 

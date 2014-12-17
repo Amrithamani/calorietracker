@@ -1,4 +1,4 @@
-@extends('_master')
+@extends('master')
 
 @section('title')
 	Add a new book

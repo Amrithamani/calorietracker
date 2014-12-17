@@ -12,7 +12,7 @@
 </head>
 <body>
 
-	<img src='images/calorieCalculator.jpg' alt='Calorietracker>
+	<a href='/'><img class='logo' src='images/calorieCalculator.jpg' alt='Calorietracker'></a>
 	
 	<nav>
 		<ul>

@@ -9,13 +9,14 @@ Route::get('/', function() {
 
 
 // List all foods / search
-Route::get('/list/{query?}', function($query) {
+Route::get('/list/{format?}', function($format = 'html') {
     return View::make('list');
 });
 
 
 // Display the form for a new foods
 Route::get('/add', function() {
+	return View::make('add');
 });
 
 

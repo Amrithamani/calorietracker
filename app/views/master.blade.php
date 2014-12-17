@@ -14,6 +14,13 @@
 
 	<img src='images/calorieCalculator.jpg' alt='Calorietracker>
 	
+	<nav>
+		<ul>
+			<li><a href='/list'>List All</a></li>
+			<li><a href='/add'>+ Add Book</a></li>
+		</ul>
+	</nav>
+	
     @yield('content')
 
     

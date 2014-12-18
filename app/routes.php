@@ -274,6 +274,81 @@ Route::get('/seed-recipes-and-foods', function() {
   
 });
 
+Route::get('/seed-recipes-and-foods-with-tags', function() {
+    $clean = new Clean();
+    
+    # Foods
+    $apple = new Food;
+    $apple->name = 'Apple';
+    $apple->type = 'Fruit';
+    $apple->calories = 53;
+    $apple->save();
+
+    $carrot = new Food;
+    $carrot->name = 'Carrot';
+    $carrot->type = 'Vegetable';
+    $carrot->calories = 4;
+    $carrot->save();
+
+    $pasta = new Food;
+    $pasta->name = 'Pasta';
+    $pasta->type = 'Salad';
+    $pasta->calories = 197;
+    $pasta->save();
+
+    
+    # Tags (Created using the Model Create shortcut method)
+    # Note: Tags model must have `protected $fillable = array('name');` in order for this to work
+    $rice         = Tag::create(array('category' => 'rice'));
+    $lunch        = Tag::create(array('category' => 'lunch'));
+    $breakfast    = Tag::create(array('category' => 'breakfast'));
+    $brunch       = Tag::create(array('category' => 'brunch'));
+    $bread        = Tag::create(array('category' => 'bread'));
+    
+    
+    # Recipes
+    $popcorn = new Recipe;
+    $popcorn->title = 'Apple popcorn ball';
+    $popcorn->image = 'images/applepopcornball.jpeg';
+    $popcorn->site_link = 'http://www.foodnetwork.com/recipes/articles/50-things-to-make-with-apples/things-to-make-with-apples.html';
+	# Associate has to be called *before* the food is created (save())
+    $popcorn->food()->associate($apple); # Equivalent of $gatsby->author_id = $fitzgerald->id
+    $popcorn->save();
+    
+    # Attach has to be called *after* the recipe is created (save()), 
+    # since resulting `recipe_id` is needed in the recipe_tag pivot table
+    $popcorn->tags()->attach($breakfast); 
+    $popcorn->tags()->attach($brunch); 
+    $popcorn->tags()->attach($lunch); 
+    
+    $muffin = new Recipe;
+    $muffin->title = 'Carrot muffins';
+    $muffin->image = 'images/carrotmuffins.jpg';
+    $muffin->site_link = 'http://allrecipes.com/Recipe/Carrot-Muffins/Detail.aspx?prop24=hn_slide1_Carrot-Muffins&evt19=1';
+    $muffin->food()->associate($carrot);
+    $muffin->save();
+    
+    
+    $muffin->tags()->attach($breakfast);   
+    $muffin->tags()->attach($brunch); 
+    $muffin->tags()->attach($lunch); 
+    $muffin->tags()->attach($bread); 
+    
+    $plain = new Recipe;
+    $plain->title = 'Plain pasta';
+    $plain->image = 'images/plain pasta.jpg';
+    $plain->site_link = 'http://allrecipes.com/Recipes/Pasta-and-Noodles/Homemade-Pasta/Main.aspx?evt19=1&src=hr_browsedeeper&soid=hr_coll_3';
+    $plain->food()->associate($pasta);
+    $plain->save();
+	
+    $plain->tags()->attach($breakfast); 
+    $plain->tags()->attach($lunch); 
+    $plain->tags()->attach($brunch); 
+    
+    
+    return 'Done';
+});
+
 Route::get('/seed-a', function() {
 
 

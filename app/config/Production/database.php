@@ -9,7 +9,7 @@ return array(
             'host'      => 'localhost',
             'database'  => 'calorietracker',
             'username'  => 'root',
-            'password'  => '9Fol0EKiA0',
+            'password'  => '',
         ),
 
     ),
